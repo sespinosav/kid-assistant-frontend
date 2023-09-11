@@ -86,3 +86,14 @@ audio {
 		transform: rotate(360deg);
 	}
 }
+
+input[type='text'] {
+	padding: 10px;
+	border: 2px solid #4a90e2;
+	border-radius: 8px;
+	font-size: 16px;
+	width: 100%;
+	max-width: 300px;
+	margin-bottom: 20px; /* Espacio entre el input y el botón */
+	box-sizing: border-box;
+}

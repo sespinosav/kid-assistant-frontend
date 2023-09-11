@@ -51,11 +51,14 @@ function sendAudio() {
 	const formData = new FormData();
 	formData.append('audio', audioBlob);
 
+	const apiToken = document.getElementById('apiToken').value;
+
 	fetch(apiUrl, {
 		method: 'POST',
 		mode: 'cors',
 		headers: {
 			'Content-Type': 'audio/wav', // Ensure this matches what your backend expects
+			'api-token': apiToken,
 		},
 		body: audioBlob,
 	})
