@@ -1,0 +1,75 @@
+body {
+	background-color: #f3f4f6; /* Cambio el color de fondo a un tono claro */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	color: #4a90e2; /* Cambio el color a un azul */
+}
+
+.container {
+	text-align: center;
+	padding: 40px;
+	border-radius: 8px;
+	box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1); /* Agrego sombra */
+	background-color: #ffffff;
+}
+
+button {
+	padding: 10px 20px;
+	border: none;
+	background-color: #4a90e2;
+	color: white;
+	font-size: 18px; /* Aumento el tamaño del texto */
+	cursor: pointer;
+	border-radius: 8px;
+	transition: background-color 0.3s, transform 0.3s;
+}
+
+button:hover,
+button:active {
+	background-color: #357abd;
+	transform: scale(1.05); /* Efecto de escala al pasar el mouse */
+}
+
+.hidden {
+	display: none;
+}
+
+/* Animación de carga (spinner) */
+.lds-ring {
+	display: inline-block;
+	position: relative;
+	width: 64px;
+	height: 64px;
+}
+.lds-ring div {
+	box-sizing: border-box;
+	display: block;
+	position: absolute;
+	width: 48px;
+	height: 48px;
+	margin: 8px;
+	border: 6px solid #4a90e2;
+	border-radius: 50%;
+	animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+	border-color: #4a90e2 transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+	animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+	animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+	animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}

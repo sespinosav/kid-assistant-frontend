@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>KidAssistant - Answering Kids' Questions</title>
+		<link rel="stylesheet" href="styles.css" />
+		<link rel="icon" href="icon.svg" type="image/svg+xml" />
+	</head>
+	<body>
+		<div class="container">
+			<img src="icon.svg" alt="Icon Image" />
+			<h1>Welcome to KidAssistant</h1>
+			<p>A fun place where kids can get their questions answered!</p>
+			<button id="recordBtn" onclick="toggleRecording()">Start Recording</button>
+			<div id="loading" class="hidden">Loading...</div>
+			<div id="spinner" class="hidden">
+				<div class="lds-ring">
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+				</div>
+			</div>
+			<audio id="response" class="hidden" controls></audio>
+		</div>
+
+		<script src="app.js"></script>
+	</body>
+</html>
