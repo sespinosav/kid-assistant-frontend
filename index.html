@@ -15,6 +15,9 @@
 			<label for="apiToken">API Token:</label>
 			<input type="text" id="apiToken" placeholder="Enter your API token" />
 			<button id="recordBtn" onclick="toggleRecording()">Start Recording</button>
+			<div id="micIconContainer" class="hidden">
+				<span id="micIcon">🎙️</span>
+			</div>
 			<div id="loading" class="hidden">Loading...</div>
 			<div id="spinner" class="hidden">
 				<div class="lds-ring">
@@ -27,6 +30,7 @@
 			<div class="audio-container">
 				<audio id="response" class="hidden" controls></audio>
 			</div>
+			<div id="errorMessage" class="error hidden">An error has occurred.</div>
 		</div>
 
 		<script src="app.js"></script>

@@ -5,6 +5,8 @@ const recordBtn = document.getElementById('recordBtn');
 const loadingDiv = document.getElementById('loading');
 const audioElement = document.getElementById('response');
 const spinnerElement = document.getElementById('spinner');
+const errorMessageDiv = document.getElementById('errorMessage');
+const micElement = document.getElementById('micIconContainer');
 const apiUrl = 'https://yj9m5q3cpf.execute-api.us-east-1.amazonaws.com/prod/kid-assistant/v1/answer';
 
 function toggleRecording() {
@@ -18,6 +20,7 @@ function toggleRecording() {
 }
 
 function startRecording() {
+	errorMessageDiv.classList.add('hidden');
 	audioChunks = [];
 	const mediaStreamConstraints = { audio: true };
 	navigator.mediaDevices
@@ -32,6 +35,8 @@ function startRecording() {
 
 			isRecording = true;
 			recordBtn.textContent = 'Stop Recording';
+			recordBtn.style.backgroundColor = '#ff4b5c';
+			micElement.classList.remove('hidden');
 		})
 		.catch((err) => {
 			console.error('Error while trying to record: ', err);
@@ -44,6 +49,9 @@ function stopRecording() {
 	recordBtn.textContent = 'Start Recording';
 	loadingDiv.classList.add('hidden');
 	spinnerElement.classList.remove('hidden');
+
+	recordBtn.style.backgroundColor = '#4a90e2'; /* Restablece el color del botón */
+	micElement.classList.add('hidden');
 }
 
 function sendAudio() {
@@ -62,7 +70,15 @@ function sendAudio() {
 		},
 		body: audioBlob,
 	})
-		.then((response) => response.text()) // Get the body as plain text (base64 string)
+		.then((response) => {
+			if (!response.ok) {
+				return response.json().then((data) => {
+					const errorMsg = data.error || 'Network response was not ok'; // Si data.error no existe, usamos un mensaje genérico.
+					throw new Error(errorMsg);
+				});
+			}
+			return response.text();
+		})
 		.then((base64String) => {
 			const audioBytes = atob(base64String); // Decode the base64
 
@@ -76,12 +92,15 @@ function sendAudio() {
 			audioElement.src = audioUrl;
 			audioElement.addEventListener('canplay', () => {
 				spinnerElement.classList.add('hidden');
+				errorMessageDiv.classList.add('hidden');
 				audioElement.classList.remove('hidden');
 				audioElement.play();
 			});
 		})
 		.catch((error) => {
 			spinnerElement.classList.add('hidden');
+			errorMessageDiv.textContent = 'Error: ' + error.message;
+			errorMessageDiv.classList.remove('hidden');
 			console.error('Error sending/receiving audio: ', error);
 		});
 }
