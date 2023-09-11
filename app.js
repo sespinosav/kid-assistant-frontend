@@ -18,6 +18,7 @@ function toggleRecording() {
 }
 
 function startRecording() {
+	audioChunks = [];
 	const mediaStreamConstraints = { audio: true };
 	navigator.mediaDevices
 		.getUserMedia(mediaStreamConstraints)
