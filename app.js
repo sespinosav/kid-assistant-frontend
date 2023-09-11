@@ -73,6 +73,7 @@ function sendAudio() {
 			audioElement.addEventListener('canplay', () => {
 				spinnerElement.classList.add('hidden');
 				audioElement.classList.remove('hidden');
+				audioElement.play();
 			});
 		})
 		.catch((error) => {

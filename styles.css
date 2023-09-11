@@ -16,6 +16,11 @@ body {
 	background-color: #ffffff;
 }
 
+/* Estilos para el nuevo contenedor del reproductor de audio */
+.audio-container {
+	margin-top: 20px; /* Espacio entre el botón y el reproductor */
+}
+
 button {
 	padding: 10px 20px;
 	border: none;
@@ -33,6 +38,13 @@ button:active {
 	transform: scale(1.05); /* Efecto de escala al pasar el mouse */
 }
 
+audio {
+	width: 100%;
+	max-width: 300px; /* Establece un ancho máximo para evitar que sea demasiado ancho */
+	margin: 0 auto; /* Centra el reproductor horizontalmente en el contenedor */
+	display: block; /* Hace que el reproductor de audio sea un bloque */
+}
+
 .hidden {
 	display: none;
 }
@@ -43,6 +55,7 @@ button:active {
 	position: relative;
 	width: 64px;
 	height: 64px;
+	margin: 20px auto 0; /* Agrega espacio en la parte superior del spinner y centra horizontalmente */
 }
 .lds-ring div {
 	box-sizing: border-box;
