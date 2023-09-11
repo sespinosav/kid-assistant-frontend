@@ -104,3 +104,30 @@ function sendAudio() {
 			console.error('Error sending/receiving audio: ', error);
 		});
 }
+
+// ... Tu código existente ...
+
+// Agrega una función para cambiar el idioma
+function changeLanguage() {
+	const languageSelector = document.getElementById('language');
+	const selectedLanguage = languageSelector.value;
+
+	// Cambia el idioma de la página según la selección del usuario
+	if (selectedLanguage === 'es') {
+		// Cambia el texto y los contenidos al español
+		document.title = 'KidAssistant - Respondiendo Preguntas de Niños';
+		document.querySelector('h1').textContent = 'Bienvenido a KidAssistant';
+		document.querySelector('p').textContent = '¡Un lugar divertido donde los niños pueden obtener respuestas a sus preguntas!';
+		document.querySelector('label[for="apiToken"]').textContent = 'Token de la API:';
+		document.querySelector('#recordBtn').textContent = 'Comenzar Grabación';
+	} else {
+		// Cambia el texto y los contenidos al inglés
+		document.title = "KidAssistant - Answering Kids' Questions";
+		document.querySelector('h1').textContent = 'Welcome to KidAssistant';
+		document.querySelector('p').textContent = 'A fun place where kids can get their questions answered!';
+		document.querySelector('label[for="apiToken"]').textContent = 'API Token:';
+		document.querySelector('#recordBtn').textContent = 'Start Recording';
+	}
+}
+
+// ... Tu código existente ...

@@ -14,6 +14,9 @@ body {
 	border-radius: 8px;
 	box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1); /* Agrego sombra */
 	background-color: #ffffff;
+	display: flex;
+	flex-direction: column; /* Cambia la dirección del flexbox a columna */
+	align-items: center;
 }
 
 /* Estilos para el nuevo contenedor del reproductor de audio */
@@ -98,6 +101,10 @@ input[type='text'] {
 	box-sizing: border-box;
 }
 
+label {
+	margin-bottom: 20px;
+}
+
 .error {
 	color: red;
 	border: 1px solid red;
@@ -114,4 +121,23 @@ input[type='text'] {
 
 #micIcon {
 	font-size: 24px;
+}
+
+/* Estilos para el selector de idioma */
+#languageSelector {
+	text-align: center;
+	margin-top: 40px; /* Aumenta el espacio hacia arriba */
+	margin-bottom: 40px; /* Aumenta el espacio hacia abajo */
+}
+
+#languageSelector label {
+	font-size: 16px;
+	margin-right: 10px;
+}
+
+#language {
+	padding: 8px;
+	font-size: 16px;
+	border: 2px solid #4a90e2;
+	border-radius: 8px;
 }
