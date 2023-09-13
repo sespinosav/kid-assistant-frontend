@@ -48,6 +48,7 @@ function changeLanguage() {
 		document.querySelector('h1').textContent = 'Bienvenido a KidAssistant';
 		document.querySelector('p').textContent = '¡Un lugar divertido donde los niños pueden obtener respuestas a sus preguntas!';
 		document.querySelector('label[for="apiToken"]').textContent = 'Token de la API:';
+		document.querySelector('#apiToken').placeholder = 'Ingresa tu token de la API'; // Línea agregada
 		document.querySelector('#recordBtn').textContent = 'Comenzar Grabación';
 	} else {
 		// Cambia el texto y los contenidos al inglés
@@ -55,6 +56,7 @@ function changeLanguage() {
 		document.querySelector('h1').textContent = 'Welcome to KidAssistant';
 		document.querySelector('p').textContent = 'A fun place where kids can get their questions answered!';
 		document.querySelector('label[for="apiToken"]').textContent = 'API Token:';
+		document.querySelector('#apiToken').placeholder = 'Enter your API token'; // Línea agregada
 		document.querySelector('#recordBtn').textContent = 'Start Recording';
 	}
 }
