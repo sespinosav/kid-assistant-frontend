@@ -9,12 +9,19 @@
 	</head>
 	<body>
 		<div class="container">
+			<label for="language">Language / Idioma:</label>
 			<div id="languageSelector">
-				<label for="language">Language / Idioma:</label>
 				<select id="language" onchange="changeLanguage()">
 					<option value="en">English</option>
 					<option value="es">Español</option>
 				</select>
+			</div>
+			<label for="darkModeToggle">Dark Mode / Modo Oscuro:</label>
+			<div class="toggle-container">
+				<label class="switch">
+					<input type="checkbox" id="darkModeToggle" onchange="toggleDarkMode()" />
+					<span class="slider"></span>
+				</label>
 			</div>
 			<img src="icon.svg" alt="Icon Image" />
 			<h1>Welcome to KidAssistant</h1>

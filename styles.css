@@ -10,7 +10,7 @@ body {
 
 .container {
 	text-align: center;
-	padding: 40px;
+	padding: 20px;
 	border-radius: 8px;
 	box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1); /* Agrego sombra */
 	background-color: #ffffff;
@@ -42,7 +42,6 @@ button:active {
 }
 
 audio {
-	width: 100%;
 	max-width: 300px; /* Establece un ancho máximo para evitar que sea demasiado ancho */
 	margin: 0 auto; /* Centra el reproductor horizontalmente en el contenedor */
 	display: block; /* Hace que el reproductor de audio sea un bloque */
@@ -102,7 +101,7 @@ input[type='text'] {
 }
 
 label {
-	margin-bottom: 20px;
+	margin-bottom: 3px;
 }
 
 .error {
@@ -126,8 +125,14 @@ label {
 /* Estilos para el selector de idioma */
 #languageSelector {
 	text-align: center;
-	margin-top: 40px; /* Aumenta el espacio hacia arriba */
-	margin-bottom: 40px; /* Aumenta el espacio hacia abajo */
+	margin-top: 20px; /* Aumenta el espacio hacia arriba */
+	margin-bottom: 20px; /* Aumenta el espacio hacia abajo */
+}
+
+.toggle-container {
+	text-align: center;
+	margin-top: 20px; /* Aumenta el espacio hacia arriba */
+	margin-bottom: 20px; /* Aumenta el espacio hacia abajo */
 }
 
 #languageSelector label {
@@ -140,4 +145,94 @@ label {
 	font-size: 16px;
 	border: 2px solid #4a90e2;
 	border-radius: 8px;
+}
+
+body.dark-mode {
+	background-color: #121212;
+	color: #ffffff;
+}
+
+body.dark-mode .container {
+	background-color: #1e1e1e;
+}
+
+body.dark-mode input[type='text'],
+body.dark-mode select,
+body.dark-mode #darkModeToggle {
+	background-color: #333;
+	color: #ffffff;
+}
+
+body.dark-mode button {
+	background-color: #555;
+	color: #ffffff;
+}
+
+body.dark-mode button:hover,
+body.dark-mode button:active {
+	background-color: #777;
+}
+
+body.dark-mode .error {
+	background-color: #442222;
+	border-color: #ff5555;
+	color: #ff5555;
+}
+
+body.dark-mode .lds-ring div {
+	border-color: #555 transparent transparent transparent;
+}
+
+/* Estilos para el Switch */
+.switch {
+	position: relative;
+	display: inline-block;
+	width: 60px;
+	height: 34px;
+}
+
+.switch input {
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+
+.slider {
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #ccc;
+	transition: 0.4s;
+	border-radius: 34px;
+}
+
+.slider:before {
+	position: absolute;
+	content: '';
+	height: 26px;
+	width: 26px;
+	left: 4px;
+	bottom: 4px;
+	background-color: white;
+	transition: 0.4s;
+	border-radius: 50%;
+}
+
+input:checked + .slider {
+	background-color: #2196f3;
+}
+
+input:focus + .slider {
+	box-shadow: 0 0 1px #2196f3;
+}
+
+input:checked + .slider:before {
+	transform: translateX(26px);
+}
+
+#apiToken {
+	margin-top: 30px;
 }

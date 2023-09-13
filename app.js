@@ -9,6 +9,63 @@ const errorMessageDiv = document.getElementById('errorMessage');
 const micElement = document.getElementById('micIconContainer');
 const apiUrl = 'https://yj9m5q3cpf.execute-api.us-east-1.amazonaws.com/prod/kid-assistant/v1/answer';
 
+// ... [Resto del código]
+
+// Al cargar la página, inicializamos la configuración desde el localStorage
+window.addEventListener('DOMContentLoaded', () => {
+	const storedLanguage = localStorage.getItem('selectedLanguage');
+	const storedApiToken = localStorage.getItem('apiToken');
+	const isDarkMode = localStorage.getItem('darkMode') === 'true';
+
+	if (isDarkMode) {
+		document.getElementById('darkModeToggle').checked = true;
+		enableDarkMode(storedLanguage);
+	} else {
+		disableDarkMode(storedLanguage);
+	}
+
+	if (storedLanguage) {
+		document.getElementById('language').value = storedLanguage;
+		changeLanguage();
+	}
+
+	if (storedApiToken) {
+		document.getElementById('apiToken').value = storedApiToken;
+	}
+});
+
+function changeLanguage() {
+	const languageSelector = document.getElementById('language');
+	const selectedLanguage = languageSelector.value;
+
+	// Guardar la selección del idioma en el localStorage
+	localStorage.setItem('selectedLanguage', selectedLanguage);
+
+	// Cambia el idioma de la página según la selección del usuario
+	if (selectedLanguage === 'es') {
+		// Cambia el texto y los contenidos al español
+		document.title = 'KidAssistant - Respondiendo Preguntas de Niños';
+		document.querySelector('h1').textContent = 'Bienvenido a KidAssistant';
+		document.querySelector('p').textContent = '¡Un lugar divertido donde los niños pueden obtener respuestas a sus preguntas!';
+		document.querySelector('label[for="apiToken"]').textContent = 'Token de la API:';
+		document.querySelector('#recordBtn').textContent = 'Comenzar Grabación';
+	} else {
+		// Cambia el texto y los contenidos al inglés
+		document.title = "KidAssistant - Answering Kids' Questions";
+		document.querySelector('h1').textContent = 'Welcome to KidAssistant';
+		document.querySelector('p').textContent = 'A fun place where kids can get their questions answered!';
+		document.querySelector('label[for="apiToken"]').textContent = 'API Token:';
+		document.querySelector('#recordBtn').textContent = 'Start Recording';
+	}
+}
+
+// Guardar el token de la API en el localStorage cuando el input cambie
+document.getElementById('apiToken').addEventListener('input', (event) => {
+	localStorage.setItem('apiToken', event.target.value);
+});
+
+// ... [Resto del código]
+
 function toggleRecording() {
 	if (isRecording) {
 		audioElement.classList.add('hidden');
@@ -34,7 +91,14 @@ function startRecording() {
 			mediaRecorder.start();
 
 			isRecording = true;
-			recordBtn.textContent = 'Stop Recording';
+			const languageSelector = document.getElementById('language');
+			const selectedLanguage = languageSelector.value;
+
+			if (selectedLanguage == 'es') {
+				recordBtn.textContent = 'Detener Grabación';
+			} else {
+				recordBtn.textContent = 'Stop Recording';
+			}
 			recordBtn.style.backgroundColor = '#ff4b5c';
 			micElement.classList.remove('hidden');
 		})
@@ -46,7 +110,16 @@ function startRecording() {
 function stopRecording() {
 	mediaRecorder.stop();
 	isRecording = false;
-	recordBtn.textContent = 'Start Recording';
+
+	const languageSelector = document.getElementById('language');
+	const selectedLanguage = languageSelector.value;
+
+	if (selectedLanguage == 'es') {
+		recordBtn.textContent = 'Comenzar Grabación';
+	} else {
+		recordBtn.textContent = 'Start Recording';
+	}
+
 	loadingDiv.classList.add('hidden');
 	spinnerElement.classList.remove('hidden');
 
@@ -61,6 +134,8 @@ function sendAudio() {
 
 	const apiToken = document.getElementById('apiToken').value;
 
+	recordBtn.classList.add('hidden');
+
 	fetch(apiUrl, {
 		method: 'POST',
 		mode: 'cors',
@@ -71,6 +146,7 @@ function sendAudio() {
 		body: audioBlob,
 	})
 		.then((response) => {
+			recordBtn.classList.remove('hidden');
 			if (!response.ok) {
 				return response.json().then((data) => {
 					const errorMsg = data.error || 'Network response was not ok'; // Si data.error no existe, usamos un mensaje genérico.
@@ -94,40 +170,51 @@ function sendAudio() {
 				spinnerElement.classList.add('hidden');
 				errorMessageDiv.classList.add('hidden');
 				audioElement.classList.remove('hidden');
-				audioElement.play();
+				if (!isSafari()) {
+					audioElement.play();
+				}
 			});
 		})
 		.catch((error) => {
 			spinnerElement.classList.add('hidden');
 			errorMessageDiv.textContent = 'Error: ' + error.message;
 			errorMessageDiv.classList.remove('hidden');
+			recordBtn.classList.remove('hidden');
 			console.error('Error sending/receiving audio: ', error);
 		});
 }
 
-// ... Tu código existente ...
+function isSafari() {
+	return /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+}
 
-// Agrega una función para cambiar el idioma
-function changeLanguage() {
-	const languageSelector = document.getElementById('language');
-	const selectedLanguage = languageSelector.value;
+function toggleDarkMode() {
+	const storedLanguage = localStorage.getItem('selectedLanguage');
+	const isDarkMode = localStorage.getItem('darkMode') === 'true';
 
-	// Cambia el idioma de la página según la selección del usuario
-	if (selectedLanguage === 'es') {
-		// Cambia el texto y los contenidos al español
-		document.title = 'KidAssistant - Respondiendo Preguntas de Niños';
-		document.querySelector('h1').textContent = 'Bienvenido a KidAssistant';
-		document.querySelector('p').textContent = '¡Un lugar divertido donde los niños pueden obtener respuestas a sus preguntas!';
-		document.querySelector('label[for="apiToken"]').textContent = 'Token de la API:';
-		document.querySelector('#recordBtn').textContent = 'Comenzar Grabación';
+	if (isDarkMode) {
+		disableDarkMode(storedLanguage);
+		localStorage.setItem('darkMode', 'false');
 	} else {
-		// Cambia el texto y los contenidos al inglés
-		document.title = "KidAssistant - Answering Kids' Questions";
-		document.querySelector('h1').textContent = 'Welcome to KidAssistant';
-		document.querySelector('p').textContent = 'A fun place where kids can get their questions answered!';
-		document.querySelector('label[for="apiToken"]').textContent = 'API Token:';
-		document.querySelector('#recordBtn').textContent = 'Start Recording';
+		enableDarkMode(storedLanguage);
+		localStorage.setItem('darkMode', 'true');
 	}
 }
 
-// ... Tu código existente ...
+function enableDarkMode(language) {
+	document.body.classList.add('dark-mode'); // Suponiendo que 'dark-mode' es la clase que activa el modo oscuro
+	if (language === 'en') {
+		document.getElementById('darkModeToggle').innerText = 'Light Mode';
+	} else {
+		document.getElementById('darkModeToggle').innerText = 'Modo Claro';
+	}
+}
+
+function disableDarkMode(language) {
+	document.body.classList.remove('dark-mode');
+	if (language === 'en') {
+		document.getElementById('darkModeToggle').innerText = 'Dark Mode';
+	} else {
+		document.getElementById('darkModeToggle').innerText = 'Modo Oscuro';
+	}
+}
